@@ -6,7 +6,8 @@ const photo = document.querySelector('.photo')
 const weather = document.querySelector('.weather')
 const temperature = document.querySelector('.temperature')
 const humidity = document.querySelector('.humidity')
-const windspeed = document.querySelector('.windspeed')
+const windSpeed = document.querySelector('.wind-speed')
+const windDirection = document.querySelector('.wind-direction')
 
 const API_LINK = 'https://api.openweathermap.org/data/2.5/weather?q='
 const API_KEY = '&appid=54e3c6cec698ca7d4bdb6970f2677689'
@@ -26,8 +27,9 @@ const getWeather = () => {
         const temp = res.data.main.temp
         const hum = res.data.main.humidity
         const status = res.data.weather[0]
-        const wind = res.data.wind.speed
-        console.log(res.data.weather[0].id);
+        const windS = res.data.wind.speed
+        const windD = res.data.wind.deg
+        console.log(res.data);
 
         // ewentualnie mozemy dostac sie do statusu za pomoca rest operatora
         // const status = Object.assign({}, ...res.data.weather)
@@ -36,7 +38,8 @@ const getWeather = () => {
         cityName.textContent= res.data.name
         temperature.textContent= temp.toFixed() + ' st C'
         humidity.textContent= hum + '%'
-        windspeed.textContent= wind + ' km/h'
+        windSpeed.textContent= windS + ' m/s'
+        windDirection.textContent= windD + ' deg'
         weather.textContent= status.main
 
         let atmosphere
@@ -60,6 +63,7 @@ const getWeather = () => {
         photo.setAttribute('src', '/img/'+ atmosphere +'.png')
 
     }).catch(() => warning.textContent= 'Wpisz poprawną nazwę miasta.')
+    input.value = ''
 }
 
 const checkEnter = (e) => {     //tworzymy funkcje, żeby móc Enterem uruchamiac
